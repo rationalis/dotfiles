@@ -262,6 +262,7 @@ you should place your code here."
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
-  (setq custom-file "~/dotspacemacs/.custom.el")
-  (load custom-file)
   )
+
+(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+(load custom-file)
