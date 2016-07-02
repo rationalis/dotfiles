@@ -31,6 +31,7 @@ values."
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      git
      ;; markdown
+     nlinum
      org
      ranger
      search-engine
@@ -40,7 +41,6 @@ values."
      ;; spell-checking
      syntax-checking
      ;; version-control
-     vim-empty-lines
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
