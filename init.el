@@ -29,7 +29,6 @@ values."
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      git
-     nlinum
      org
      ranger
      search-engine
