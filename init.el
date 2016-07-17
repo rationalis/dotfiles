@@ -42,7 +42,10 @@ values."
      ;; Languages:
      autohotkey
      emacs-lisp
+     html
+     javascript
      markdown
+     python
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -152,7 +155,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -264,6 +267,7 @@ you should place your code here."
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
+  (spacemacs/toggle-indent-guide-globally)
   )
 
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
