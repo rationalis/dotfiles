@@ -1,0 +1,10 @@
+# Open files with their associated default application
+def _default_open(args):
+    if !(test -f @(args[0])):
+        subprocess.Popen(args[0], shell=True)
+    else:
+        print('File does not exist.')
+
+aliases['ls'] = ['ls', '--color', '--group-directories-first', '-ahlv']
+aliases['less'] = ['less', '-r']
+aliases['o'] = _default_open
