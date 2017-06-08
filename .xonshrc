@@ -1,3 +1,6 @@
+# -*-Python-*-
+# xonsh is a superset of Python, but this is close enough
+
 # Open files with their associated default application
 def _default_open(args):
     if !(test -f @(args[0])):
