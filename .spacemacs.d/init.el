@@ -367,6 +367,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
   (spacemacs/toggle-indent-guide-globally)
+  (setq spacemacs-useful-buffers-regexp nil)
   )
 
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
