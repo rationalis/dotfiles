@@ -150,10 +150,10 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
-                               :weight normal
-                               :width normal
+   dotspacemacs-default-font '("Fira Code"
+                               :size 15
+                               :weight light
+                               :width condensed
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -367,7 +367,8 @@ you should place your code here."
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
   (spacemacs/toggle-indent-guide-globally)
-  (setq spacemacs-useful-buffers-regexp nil)
+  (global-prettify-symbols-mode 1)
+  (setq prettify-symbols-unprettify-at-point t)
   )
 
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
