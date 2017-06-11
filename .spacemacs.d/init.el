@@ -37,12 +37,15 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t)
      better-defaults
      chrome
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      git
+     helm
      org
      nlinum
      ranger
