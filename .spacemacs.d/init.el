@@ -74,7 +74,10 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+     pretty-mode
+     (prettify-utils :location (recipe :fetcher github
+                                       :repo "Ilazki/prettify-utils.el")))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -97,6 +100,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   )
 
 (defun dotspacemacs/user-config ()
@@ -114,8 +118,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
   (spacemacs/toggle-indent-guide-globally)
-  (global-prettify-symbols-mode 1)
-  (setq prettify-symbols-unprettify-at-point t)
-  )
 
-(load (expand-file-name "custom.el" dotspacemacs-directory))
+  (load (expand-file-name "prettify.el" dotspacemacs-directory))
+  (module/display)
+  )
