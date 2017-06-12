@@ -42,6 +42,7 @@ values."
                       auto-completion-enable-help-tooltip t)
      better-defaults
      chrome
+     colors
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      git
@@ -79,7 +80,9 @@ values."
      (prettify-utils :location (recipe :fetcher github
                                        :repo "Ilazki/prettify-utils.el")))
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '()
+   ;; I manually modified solarized.el to high-contrast as according to:
+   ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
+   dotspacemacs-frozen-packages '(solarized-theme)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
