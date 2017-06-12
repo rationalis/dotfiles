@@ -1,6 +1,8 @@
 ;; A working subset for prettification of the .spacemacs config found at:
 ;; https://github.com/ekaschalk/dotspacemacs
 
+;; Requires Fira Code Symbol and Symbola fonts to work well
+
 (defun module/display ()
   (module/display/fontsets)
   (module/display/font-locks)
