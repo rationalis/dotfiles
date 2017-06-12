@@ -228,6 +228,8 @@ Ivy keybinding has 'SPC i u' for consel-unicode-char for exploring options."
           (:return     "⟼") (:yield      "⟻")
           (:not         "￢")
           (:for         "∀")
+          (:and         "∧")
+          (:or          "∨")
 
           ;;;;; Other
           (:tuple       "⨂")
@@ -254,6 +256,7 @@ KWDS is a plist of pretty option and the text to be replaced for it."
                     :return "return" :yield "yield"
                     :tuple "Tuple"
                     :pipe "tz-pipe"
+                    :and "and" :or "or"
                     ))
          (prettify-utils-generate
           ;; Mypy Stuff
@@ -284,6 +287,13 @@ MODE-HOOK-PAIRS-ALIST is an alist of the mode hoook and its pretty pairs."
 
   ;; Deactivate pretty groups conflicting with Fira Code ligatures
   (pretty-deactivate-groups  ; Replaced by Fira Code
-   '(:equality :ordering :ordering-double :ordering-triple
-               :arrows :arrows-twoheaded :punctuation
-               :logic :sets :sub-and-superscripts)))
+   '(:equality
+     :ordering
+     :ordering-double
+     :ordering-triple
+     :arrows
+     :arrows-twoheaded
+     :punctuation
+     :logic
+     :sets
+     :sub-and-superscripts)))
