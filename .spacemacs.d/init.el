@@ -124,4 +124,6 @@ you should place your code here."
 
   (load (expand-file-name "prettify.el" dotspacemacs-directory))
   (module/display)
+
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   )
