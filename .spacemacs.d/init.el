@@ -48,7 +48,7 @@ values."
      git
      helm
      org
-     nlinum
+     ;; nlinum
      ranger
      restclient
      search-engine
@@ -80,9 +80,7 @@ values."
      (prettify-utils :location (recipe :fetcher github
                                        :repo "Ilazki/prettify-utils.el")))
    ;; A list of packages that cannot be updated.
-   ;; I manually modified solarized.el to high-contrast as according to:
-   ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
-   dotspacemacs-frozen-packages '(solarized-theme)
+   dotspacemacs-frozen-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -114,9 +112,19 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+
   (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
   (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
   (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
+
+  ;; Native line numbers
+  (add-hook 'hack-local-variables-hook (lambda () (setq display-line-numbers 'relative)))
+  (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode)))
+  (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode)))
+
+  (set-face-attribute 'line-number-current-line nil
+                      :background "white" :foreground "black")
+
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
