@@ -79,7 +79,12 @@ values."
    dotspacemacs-additional-packages '(
      pretty-mode
      (prettify-utils :location (recipe :fetcher github
-                                       :repo "Ilazki/prettify-utils.el")))
+                                       :repo "Ilazki/prettify-utils.el"))
+     (xelb :location (recipe :fetcher github
+                             :repo "ch11ng/xelb"))
+     (exwm :location (recipe :fetcher github
+                             :repo "ch11ng/exwm"))
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -135,4 +140,62 @@ you should place your code here."
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+
+  ;; Workaround solution to Helm taking up full width and hiding all other windows
+  ;; See https://github.com/syl20bnr/spacemacs/issues/9044
+  (setq helm-split-window-inside-p t)
+  (setq-default helm-display-function 'helm-default-display-buffer)
+
+  (spacemacs/set-leader-keys "oo" (lambda (command)
+                                    (interactive (list (read-shell-command "$ ")))
+                                    (start-process-shell-command command nil command)))
+  (require 'exwm)
+  (require 'exwm-config)
+  (setq exwm-input--line-mode-passthrough t)
+
+  ;; Set the initial workspace number.
+  ;; (setq exwm-workspace-number 2)
+
+  ;; Make class name the buffer name
+  (add-hook 'exwm-update-class-hook
+            (lambda ()
+              (setq exwm-input--line-mode-passthrough t)
+              (exwm-workspace-rename-buffer exwm-class-name)
+              ))
+
+  ;; 's-w': Switch workspace
+  ;; (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
+  (exwm-input-set-key (kbd "s-w") #'spacemacs/workspaces-transient-state/body)
+  ;; s-h, s-j, s-k, s-l: move around
+  (exwm-input-set-key (kbd "s-j") #'evil-window-left)
+  (exwm-input-set-key (kbd "s-k") #'evil-window-down)
+  ;; doesn't work in VM due to Windows capturing s-l
+  (exwm-input-set-key (kbd "s-l") #'evil-window-up) 
+  (exwm-input-set-key (kbd "s-;") #'evil-window-right)
+  ;; lock screen
+  (exwm-input-set-key (kbd "C-M-l") #'lock-screen)
+
+  ;; (exwm-input-set-key (kbd "C-SPC") )
+
+  (define-key global-map (kbd "C-M-l") #'lock-screen)
+  (push ?\s-\  exwm-input-prefix-keys)
+
+  ;; Common binding for "History" in web browsers.
+  (delete ?\C-h exwm-input-prefix-keys)
+
+  ;; 's-&': Launch application
+  (exwm-input-set-key (kbd "s-&")
+                     (lambda (command)
+                      (interactive (list (read-shell-command "$ ")))
+                     (start-process-shell-command command nil command)))
+
+  ;; (require 'exwm-systemtray)
+  ;; (exwm-systemtray-enable)
+  ;; Enable EXWM
+  (exwm-enable)
+  ;; Configure Ido
+  (exwm-config-ido)
+  ;; Other configurations
+  (exwm-config-misc)
   )
