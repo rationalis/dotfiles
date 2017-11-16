@@ -150,6 +150,10 @@ you should place your code here."
   (spacemacs/set-leader-keys "oo" (lambda (command)
                                     (interactive (list (read-shell-command "$ ")))
                                     (start-process-shell-command command nil command)))
+
+  (spacemacs/set-leader-keys "of" (lambda () (interactive)
+                                    (start-process-shell-command "firefox-developer" nil
+                                                                 "firefox-developer")))
   (require 'exwm)
   (require 'exwm-config)
   (setq exwm-input--line-mode-passthrough t)
@@ -163,6 +167,12 @@ you should place your code here."
               (setq exwm-input--line-mode-passthrough t)
               (exwm-workspace-rename-buffer exwm-class-name)
               ))
+
+
+  (exwm-input-set-key (kbd "s-r") #'exwm-reset)
+  (exwm-input-set-key (kbd "s-R") #'exwm-restart)
+  (exwm-input-set-key (kbd "s-b") #'helm-mini)
+  (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
 
   ;; 's-w': Switch workspace
   ;; (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
