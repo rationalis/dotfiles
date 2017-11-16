@@ -54,8 +54,10 @@ values."
      search-engine
      (shell :variables
             ;; shell-default-term-shell "xonsh"
+            shell-default-term-shell "eshell"
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-enable-smart-eshell t)
      ;; spell-checking
      syntax-checking
      ;; version-control
@@ -174,7 +176,7 @@ you should place your code here."
   (exwm-input-set-key (kbd "s-r") #'exwm-reset)
   (exwm-input-set-key (kbd "s-R") #'exwm-restart)
   (exwm-input-set-key (kbd "s-b") #'helm-mini)
-  (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
+  (exwm-input-set-key (kbd "C-'") #'eshell)
 
   ;; 's-w': Switch workspace
   ;; (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
