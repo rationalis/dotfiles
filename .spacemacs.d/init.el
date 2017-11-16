@@ -185,15 +185,16 @@ you should place your code here."
   (exwm-input-set-key (kbd "s-j") #'evil-window-left)
   (exwm-input-set-key (kbd "s-k") #'evil-window-down)
   ;; doesn't work in VM due to Windows capturing s-l
-  (exwm-input-set-key (kbd "s-l") #'evil-window-up) 
+  (exwm-input-set-key (kbd "s-l") #'evil-window-up)
   (exwm-input-set-key (kbd "s-;") #'evil-window-right)
   ;; lock screen
   (exwm-input-set-key (kbd "C-M-l") #'lock-screen)
 
-  ;; (exwm-input-set-key (kbd "C-SPC") )
-
   (define-key global-map (kbd "C-M-l") #'lock-screen)
   (push ?\s-\  exwm-input-prefix-keys)
+
+  ;; Emacs leader in EXWM
+  (push ?\M-m exwm-input-prefix-keys)
 
   ;; Common binding for "History" in web browsers.
   (delete ?\C-h exwm-input-prefix-keys)
