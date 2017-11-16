@@ -147,6 +147,8 @@ you should place your code here."
   (setq helm-split-window-inside-p t)
   (setq-default helm-display-function 'helm-default-display-buffer)
 
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+
   (spacemacs/set-leader-keys "oo" (lambda (command)
                                     (interactive (list (read-shell-command "$ ")))
                                     (start-process-shell-command command nil command)))
