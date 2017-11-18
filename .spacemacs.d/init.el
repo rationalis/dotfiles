@@ -122,13 +122,13 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 
   (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
-  (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
+  ;; Fill column indicator causes pdf modes to lag to death.
+  (add-hook 'prog-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
   (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
 
   ;; Native line numbers
-  (add-hook 'hack-local-variables-hook (lambda () (setq display-line-numbers 'relative)))
-  (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode)))
-  (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode)))
+  (add-hook 'prog-mode-hook (lambda () (setq display-line-numbers 'relative)))
+  (add-hook 'text-mode-hook (lambda () (setq display-line-numbers 'relative)))
 
   (set-face-attribute 'line-number-current-line nil
                       :background "white" :foreground "black")
@@ -143,6 +143,13 @@ you should place your code here."
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
+
+  (require 'symon)
+  (define-symon-monitor symon-current-time-monitor-2
+    :display (format-time-string "%c"))
+  (add-to-list 'symon-monitors 'symon-current-time-monitor-2)
+  (setq symon-refresh-rate 0.5)
+  (spacemacs/toggle-minibuffer-system-monitor-on)
 
   ;; Workaround solution to Helm taking up full width and hiding all other windows
   ;; See https://github.com/syl20bnr/spacemacs/issues/9044
@@ -205,8 +212,6 @@ you should place your code here."
                       (interactive (list (read-shell-command "$ ")))
                      (start-process-shell-command command nil command)))
 
-  ;; (require 'exwm-systemtray)
-  ;; (exwm-systemtray-enable)
   ;; Enable EXWM
   (exwm-enable)
   ;; Configure Ido
