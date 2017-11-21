@@ -121,15 +121,19 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 
+  (global-set-key (kbd "C-;") 'eval-expression)
+
+  ;; Simple hooks
   (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
   ;; Fill column indicator causes pdf modes to lag to death.
   (add-hook 'prog-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
   (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
-
   ;; Native line numbers
   (add-hook 'prog-mode-hook (lambda () (setq display-line-numbers 'relative)))
   (add-hook 'text-mode-hook (lambda () (setq display-line-numbers 'relative)))
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
+  ;; Crude way to highlight current line number.
   (set-face-attribute 'line-number-current-line nil
                       :background "white" :foreground "black")
 
@@ -140,9 +144,6 @@ you should place your code here."
 
   (load (expand-file-name "prettify.el" dotspacemacs-directory))
   (module/display)
-
-  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-
 
   (require 'symon)
   (define-symon-monitor symon-current-time-monitor-2
