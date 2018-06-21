@@ -31,7 +31,7 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(csv
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -48,7 +48,7 @@ values."
      git
      helm
      org
-     nlinum
+     ;;nlinum
      ranger
      restclient
      search-engine
@@ -57,6 +57,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
+     semantic
      syntax-checking
      ;; version-control
 
@@ -126,4 +127,7 @@ you should place your code here."
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+  ;; Native line numbers
+  (add-hook 'prog-mode-hook (lambda () (setq display-line-numbers 'relative)))
+  (add-hook 'text-mode-hook (lambda () (setq display-line-numbers 'relative)))
   )
