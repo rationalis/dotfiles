@@ -31,7 +31,7 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(csv
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -48,7 +48,7 @@ values."
      git
      helm
      org
-     nlinum
+     ;;nlinum
      ranger
      restclient
      search-engine
@@ -57,9 +57,12 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
+     semantic
      syntax-checking
      ;; version-control
 
+     dap
+     lsp
      ;; Languages:
      autohotkey
      c-c++
@@ -70,6 +73,8 @@ values."
      latex
      markdown
      python
+     (rust :variables
+           rust-backend 'lsp)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -84,7 +89,7 @@ values."
    ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
    dotspacemacs-frozen-packages '(solarized-theme)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(exec-path-from-shell)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -96,6 +101,14 @@ values."
 
 (load (expand-file-name "init_vars.el" dotspacemacs-directory))
 
+(defun dotspacemacs/user-env ()
+   "Environment variables setup.
+This function defines the environment variables for your Emacs session. By
+default it calls `spacemacs/load-spacemacs-env' which loads the environment
+variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
+See the header of this file for more information."
+   (spacemacs/load-spacemacs-env))
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -104,6 +117,13 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+  )
+
+(defun dotspacemacs/user-load ()
+  "Library to load while dumping.
+This function is called only while dumping Spacemacs configuration. You can
+`require' or `load' the libraries of your choice that will be included in the
+dump."
   )
 
 (defun dotspacemacs/user-config ()
@@ -126,4 +146,7 @@ you should place your code here."
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+  ;; Native line numbers
+  (add-hook 'prog-mode-hook (lambda () (setq display-line-numbers 'relative)))
+  (add-hook 'text-mode-hook (lambda () (setq display-line-numbers 'relative)))
   )
