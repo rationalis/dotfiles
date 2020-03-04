@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -31,7 +31,8 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(csv
+   '(yaml
+     csv
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -67,10 +68,12 @@ values."
      autohotkey
      c-c++
      emacs-lisp
+     fstar
      html
      java
      javascript
      latex
+     lean
      markdown
      python
      (rust :variables
@@ -146,7 +149,4 @@ you should place your code here."
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-  ;; Native line numbers
-  (add-hook 'prog-mode-hook (lambda () (setq display-line-numbers 'relative)))
-  (add-hook 'text-mode-hook (lambda () (setq display-line-numbers 'relative)))
   )
