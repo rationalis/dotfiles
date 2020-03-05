@@ -18,124 +18,128 @@
 
 ;;; Code:
 
+(defun proxy-shell-command (name dummy command)
+  (shell-command command nil nil)
+    )
+
 (defun lighthouse-call (command)
   "Call lighthouse with a given a COMMAND."
   (interactive "sCommand: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-call"
    nil
-   (format "lh %s" command))
+   (format "bash -ic \"lh %s\"" command))
   )
 
 (defun lighthouse-on ()
   "Turn on all lights."
   (interactive)
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-on"
    nil
-   "lh on"
+   "bash -ic \"lh on\""
    )
   )
 
 (defun lighthouse-id-on (ids)
   "Turn on lights by IDS."
   (interactive "sIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-on"
    nil
-   (format "lh on -i %s" ids))
+   (format "bash -ic \"lh on -i %s\"" ids))
   )
 
 (defun lighthouse-off ()
   "Turn off all lights."
   (interactive)
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-off"
    nil
-   "lh off"
+   "bash -ic \"lh off\""
    )
   )
 
 (defun lighthouse-id-off (ids)
   "Turn off lights by IDS."
   (interactive "sIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-off"
    nil
-   (format "lh off -i %s" ids))
+   (format "bash -ic \"lh off -i %s\"" ids))
   )
 
 (defun lighthouse-state (state)
   "Lighthouse send STATE string."
   (interactive "sState: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-state"
    nil
-   (format "lh state %s" state))
+   (format "bash -ic \"lh state %s\"" state))
   )
 
 (defun lighthouse-id-state (state ids)
   "Lighthouse send STATE string to IDS."
   (interactive "sState: \nsIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-state"
    nil
-   (format "lh state %s -i %s" state ids))
+   (format "bash -ic \"lh state %s -i %s\"" state ids))
   )
 
 (defun lighthouse-bri (bri)
   "Lighthouse send BRI val as brightness."
   (interactive "nBrightness (0 - 254): ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-bri"
    nil
-   (format "lh bri %s" bri))
+   (format "bash -ic \"lh bri %s\"" bri))
   )
 
 (defun lighthouse-id-bri (bri ids)
   "Lighthouse send BRI val as brightness to IDS."
   (interactive "nBrightness (0 - 254): \nsIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-bri"
    nil
-   (format "lh bri %s -i %s" bri ids))
+   (format "bash -ic \"lh bri %s -i %s\"" bri ids))
   )
 
 (defun lighthouse-color (color)
   "Lighthouse send hexcode of COLOR."
   (interactive "sColor: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-color"
    nil
-   (format "lh color %s" color))
+   (format "bash -ic \"lh color %s\"" color))
   )
 
 (defun lighthouse-id-color (color ids)
   "Lighthouse send hexcode of COLOR to IDS."
   (interactive "sColor: \nsIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-color"
    nil
-   (format "lh color %s -i %s" color ids))
+   (format "bash -ic \"lh color %s -i %s\"" color ids))
   )
 
 (defun lighthouse-loop ()
   "Put all lights in a colorloop."
   (interactive)
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-loop"
    nil
-   "lh loop"
+   "bash -ic \"lh loop\""
   )
   )
 
 (defun lighthouse-id-loop (ids)
   "Put lights into a colorloop by IDS"
   (interactive "sIDs: ")
-  (start-process-shell-command
+  (proxy-shell-command
    "lighthouse-id-loop"
    nil
-   (format "lh loop -i %s" ids))
+   (format "bash -ic \"lh loop -i %s\"" ids))
   )
 
 (defun lighthouse-info ()
