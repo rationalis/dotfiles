@@ -61,6 +61,7 @@ values."
      semantic
      syntax-checking
      ;; version-control
+     theming
 
      dap
      lsp
@@ -92,7 +93,10 @@ values."
    ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
    dotspacemacs-frozen-packages '(solarized-theme)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(exec-path-from-shell)
+   dotspacemacs-excluded-packages
+   '(
+     ;;exec-path-from-shell
+    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -146,7 +150,11 @@ you should place your code here."
   (spacemacs/toggle-indent-guide-globally)
 
   (load (expand-file-name "prettify.el" dotspacemacs-directory))
+  (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  (setq doom-modeline-buffer-modification-icon nil)
+  (setq-default doom-modeline-height 20)
   )
