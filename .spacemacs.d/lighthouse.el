@@ -28,7 +28,7 @@
   (proxy-shell-command
    "lighthouse-call"
    nil
-   (format "bash -ic \"lh %s\"" command))
+   (format "lh %s" command))
   )
 
 (defun lighthouse-on ()
@@ -37,7 +37,7 @@
   (proxy-shell-command
    "lighthouse-on"
    nil
-   "bash -ic \"lh on\""
+   "lh on"
    )
   )
 
@@ -47,7 +47,7 @@
   (proxy-shell-command
    "lighthouse-id-on"
    nil
-   (format "bash -ic \"lh on -i %s\"" ids))
+   (format "lh on -i %s" ids))
   )
 
 (defun lighthouse-off ()
@@ -56,7 +56,7 @@
   (proxy-shell-command
    "lighthouse-off"
    nil
-   "bash -ic \"lh off\""
+   "lh off"
    )
   )
 
@@ -66,7 +66,7 @@
   (proxy-shell-command
    "lighthouse-id-off"
    nil
-   (format "bash -ic \"lh off -i %s\"" ids))
+   (format "lh off -i %s" ids))
   )
 
 (defun lighthouse-state (state)
@@ -75,7 +75,7 @@
   (proxy-shell-command
    "lighthouse-state"
    nil
-   (format "bash -ic \"lh state %s\"" state))
+   (format "lh state %s" state))
   )
 
 (defun lighthouse-id-state (state ids)
@@ -84,7 +84,7 @@
   (proxy-shell-command
    "lighthouse-id-state"
    nil
-   (format "bash -ic \"lh state %s -i %s\"" state ids))
+   (format "lh state %s -i %s" state ids))
   )
 
 (defun lighthouse-bri (bri)
@@ -93,7 +93,7 @@
   (proxy-shell-command
    "lighthouse-bri"
    nil
-   (format "bash -ic \"lh bri %s\"" bri))
+   (format "lh bri %s" bri))
   )
 
 (defun lighthouse-id-bri (bri ids)
@@ -102,7 +102,7 @@
   (proxy-shell-command
    "lighthouse-id-bri"
    nil
-   (format "bash -ic \"lh bri %s -i %s\"" bri ids))
+   (format "lh bri %s -i %s" bri ids))
   )
 
 (defun lighthouse-color (color)
@@ -111,7 +111,7 @@
   (proxy-shell-command
    "lighthouse-color"
    nil
-   (format "bash -ic \"lh color %s\"" color))
+   (format "lh color %s" color))
   )
 
 (defun lighthouse-id-color (color ids)
@@ -120,7 +120,7 @@
   (proxy-shell-command
    "lighthouse-id-color"
    nil
-   (format "bash -ic \"lh color %s -i %s\"" color ids))
+   (format "lh color %s -i %s" color ids))
   )
 
 (defun lighthouse-loop ()
@@ -129,7 +129,7 @@
   (proxy-shell-command
    "lighthouse-loop"
    nil
-   "bash -ic \"lh loop\""
+   "lh loop"
   )
   )
 
@@ -139,7 +139,7 @@
   (proxy-shell-command
    "lighthouse-id-loop"
    nil
-   (format "bash -ic \"lh loop -i %s\"" ids))
+   (format "lh loop -i %s" ids))
   )
 
 (defun lighthouse-info ()
