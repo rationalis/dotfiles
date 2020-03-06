@@ -58,7 +58,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
-     semantic
+     ;; semantic
      syntax-checking
      ;; version-control
      theming
@@ -131,6 +131,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+  (spacemacs/dump-modes '(emacs-lisp-mode))
   )
 
 (defun dotspacemacs/user-config ()
