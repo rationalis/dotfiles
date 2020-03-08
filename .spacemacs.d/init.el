@@ -132,8 +132,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (defun load-require-stuff ()
   "Load and require stuff"
   (require 'dimmer)
-  (load (expand-file-name "prettify.el" dotspacemacs-directory))
   (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+  (load (expand-file-name "prettify.el" dotspacemacs-directory))
+  (load (expand-file-name "transform.el" dotspacemacs-directory))
   )
 
 (defun dotspacemacs/user-load ()
@@ -152,7 +153,10 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (load-require-stuff)
+
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  (define-key evil-insert-state-map (kbd "C-<tab>") 'transform-previous-char)
   (global-set-key (kbd "C-;") 'eval-expression)
 
   (spacemacs/toggle-truncate-lines-on)
@@ -166,7 +170,6 @@ you should place your code here."
   (setenv "GIT_ASKPASS" "git-gui--askpass")
 
 
-  (load-require-stuff)
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
