@@ -10,7 +10,7 @@
                            "v∨∪ ^∧∩ 0∅"
                            "Rℝ Zℤ Qℚ Nℕ Cℂ"
                            "aαΑ∀ bβΒ gγΓ dδΔ eεΕ∃ zζΖ hηΗ qθΘ"
-                           "iιΙ kκΚ lλΛ mμΜ nνΝ∩ xξΞ oοΟ pπΠ"
+                           "iιΙ kκΚ lλΛ mμΜ nνΝ∩ xχΧξΞ oοΟ pπΠ"
                            "rρΡ sσΣ tτΤ yυΥ fφΦ cχΧ uψΨ∪ wωΩ")
                          " ")))
   "Each element of the list is a list of related variants.")
@@ -21,6 +21,7 @@
                                       (mapcar #'identity s))
                                     (split-string (cdr c)))))
           '((?_ . "<≤ ⊂⊆ ⊏⊑ >≥ ⊃⊇ ⊐⊒")
+            (?= . "<≤ ⊂⊆ ⊏⊑ >≥ ⊃⊇ ⊐⊒")
             (?/ . "=≠ <≮ ≤≰ ∈∉ ⊂⊄ ⊆⊈ >≯ ≥≱ ∋∌ ⊃⊅ ⊇⊉")))
 
   "Each car is the accent modifier, cdr is a list ((ORIGINAL ACCENT) ...).")
