@@ -89,6 +89,7 @@ values."
      (prettify-utils :location (recipe :fetcher github
                                        :repo "Ilazki/prettify-utils.el"))
      dimmer
+     gcmh
    )
    ;; A list of packages that cannot be updated.
    ;; I manually modified solarized.el to high-contrast as according to:
@@ -154,14 +155,16 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
   (global-set-key (kbd "C-;") 'eval-expression)
 
-  (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
-  (add-hook 'prog-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
-  (add-hook 'text-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
-  (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
+  (spacemacs/toggle-truncate-lines-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-indent-guide-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
-  (spacemacs/toggle-indent-guide-globally)
+
 
   (load-require-stuff)
   (module/display)
@@ -178,6 +181,8 @@ you should place your code here."
   ;; Crude way to highlight current line number.
   (set-face-attribute 'line-number-current-line nil
                       :foreground "white")
+
+  (setq-default display-line-numbers-width 3)
 
   (setq doom-modeline-buffer-modification-icon nil)
   (setq-default doom-modeline-height 20)
@@ -196,4 +201,9 @@ you should place your code here."
   ;; Why does this need a timer to not dim the minibuffer?
   ;; The world may never know.
   (run-with-idle-timer 0.5 nil (lambda () (dimmer-mode t)))
+
+  ;; 300 MB before GC when not idle
+  (setq gcmh-high-cons-threshold 300000000)
+  (setq gcmh-idle-delay 5)
+  (gcmh-mode 1)
   )
