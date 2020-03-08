@@ -87,7 +87,9 @@ values."
    dotspacemacs-additional-packages '(
      pretty-mode
      (prettify-utils :location (recipe :fetcher github
-                                       :repo "Ilazki/prettify-utils.el")))
+                                       :repo "Ilazki/prettify-utils.el"))
+     dimmer
+   )
    ;; A list of packages that cannot be updated.
    ;; I manually modified solarized.el to high-contrast as according to:
    ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
@@ -126,11 +128,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   )
 
+(defun load-require-stuff ()
+  "Load and require stuff"
+  (require 'dimmer)
+  (load (expand-file-name "prettify.el" dotspacemacs-directory))
+  (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+  )
+
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+  (load-require-stuff)
   (spacemacs/dump-modes '(emacs-lisp-mode))
   )
 
@@ -150,12 +160,25 @@ you should place your code here."
   (setenv "GIT_ASKPASS" "git-gui--askpass")
   (spacemacs/toggle-indent-guide-globally)
 
-  (load (expand-file-name "prettify.el" dotspacemacs-directory))
-  (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+  (load-require-stuff)
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
   (setq doom-modeline-buffer-modification-icon nil)
   (setq-default doom-modeline-height 20)
+
+  ;; Seems to be bugged.
+  ;; (dimmer-configure-company-box)
+  (dimmer-configure-helm)
+  (dimmer-configure-hydra)
+  (dimmer-configure-magit)
+  (dimmer-configure-org)
+  (dimmer-configure-posframe)
+  (dimmer-configure-which-key)
+  (add-to-list 'dimmer-buffer-exclusion-regexps "\\*Messages\\*")
+  (setq dimmer-fraction 0.35)
+  ;; Why does this need a timer to not dim the minibuffer?
+  ;; The world may never know.
+  (run-with-idle-timer 0.5 nil (lambda () (dimmer-mode t)))
   )
