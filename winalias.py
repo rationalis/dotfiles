@@ -5,10 +5,8 @@ import shutil
 
 exe_files = []
 
-s = """
-#!/bin/sh
-{} "$@"
-"""
+s = '''#!/bin/sh
+{} "$@"'''
 
 for pathdir in os.getenv("PATH").split(os.pathsep):
     if os.path.isdir(pathdir):
