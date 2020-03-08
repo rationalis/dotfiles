@@ -152,8 +152,11 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  (global-set-key (kbd "C-;") 'eval-expression)
+
   (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
-  (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
+  (add-hook 'prog-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
+  (add-hook 'text-mode-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
   (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
@@ -164,6 +167,17 @@ you should place your code here."
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; Workaround solution to Helm taking up full width and hiding other windows
+  ;; See https://github.com/syl20bnr/spacemacs/issues/9044
+  (setq helm-split-window-inside-p t)
+  (setq-default helm-display-function 'helm-default-display-buffer)
+
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+
+  ;; Crude way to highlight current line number.
+  (set-face-attribute 'line-number-current-line nil
+                      :foreground "white")
 
   (setq doom-modeline-buffer-modification-icon nil)
   (setq-default doom-modeline-height 20)
@@ -177,6 +191,7 @@ you should place your code here."
   (dimmer-configure-posframe)
   (dimmer-configure-which-key)
   (add-to-list 'dimmer-buffer-exclusion-regexps "\\*Messages\\*")
+  (setq dimmer-watch-frame-focus-events nil)
   (setq dimmer-fraction 0.35)
   ;; Why does this need a timer to not dim the minibuffer?
   ;; The world may never know.
