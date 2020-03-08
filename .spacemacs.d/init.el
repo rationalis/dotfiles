@@ -206,4 +206,6 @@ you should place your code here."
   (setq gcmh-high-cons-threshold 300000000)
   (setq gcmh-idle-delay 5)
   (gcmh-mode 1)
+
+  (setq evil-want-minibuffer t)
   )
