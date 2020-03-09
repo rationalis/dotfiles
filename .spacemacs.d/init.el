@@ -132,7 +132,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (defun load-require-stuff ()
   "Load and require stuff"
   (require 'dimmer)
+  (load (expand-file-name "betterquit.el" dotspacemacs-directory))
   (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+  (load (expand-file-name "my-evil-config.el" dotspacemacs-directory))
   (load (expand-file-name "prettify.el" dotspacemacs-directory))
   (load (expand-file-name "transform.el" dotspacemacs-directory))
   )
@@ -144,6 +146,7 @@ This function is called only while dumping Spacemacs configuration. You can
 dump."
   (load-require-stuff)
   (spacemacs/dump-modes '(emacs-lisp-mode))
+  (spacemacs/dump-modes '(eshell-mode))
   )
 
 (defun dotspacemacs/user-config ()
@@ -154,12 +157,12 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (load-require-stuff)
+  (my-evil-config)
 
-  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  (global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
   (define-key evil-insert-state-map (kbd "C-<tab>") 'transform-previous-char)
-  (global-set-key (kbd "C-;") 'eval-expression)
 
-  (spacemacs/toggle-truncate-lines-on)
+  (add-hook 'hack-local-variables-hook 'spacemacs/toggle-truncate-lines-on)
   (add-hook 'prog-mode-hook 'spacemacs/toggle-indent-guide-on)
   (add-hook 'prog-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
   (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
@@ -179,7 +182,8 @@ you should place your code here."
   (setq helm-split-window-inside-p t)
   (setq-default helm-display-function 'helm-default-display-buffer)
 
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-display-buffer-function
+        'magit-display-buffer-same-window-except-diff-v1)
 
   ;; Crude way to highlight current line number.
   (set-face-attribute 'line-number-current-line nil
@@ -209,6 +213,4 @@ you should place your code here."
   (setq gcmh-high-cons-threshold 300000000)
   (setq gcmh-idle-delay 5)
   (gcmh-mode 1)
-
-  (setq evil-want-minibuffer t)
   )
