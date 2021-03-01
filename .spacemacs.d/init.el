@@ -58,7 +58,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
-     semantic
+     ;; semantic
      syntax-checking
      ;; version-control
      theming
@@ -90,7 +90,10 @@ values."
    dotspacemacs-additional-packages '(
      pretty-mode
      (prettify-utils :location (recipe :fetcher github
-                                       :repo "Ilazki/prettify-utils.el")))
+                                       :repo "Ilazki/prettify-utils.el"))
+     dimmer
+     gcmh
+   )
    ;; A list of packages that cannot be updated.
    ;; I manually modified solarized.el to high-contrast as according to:
    ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
@@ -133,11 +136,22 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (recentf-mode 1)
   )
 
+(defun load-require-stuff ()
+  "Load and require stuff"
+  (require 'dimmer)
+  (load (expand-file-name "betterquit.el" dotspacemacs-directory))
+  (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+  (load (expand-file-name "my-evil-config.el" dotspacemacs-directory))
+  (load (expand-file-name "prettify.el" dotspacemacs-directory))
+  (load (expand-file-name "transform.el" dotspacemacs-directory))
+  )
+
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+  (load-require-stuff)
   (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode))
   )
 
@@ -148,20 +162,40 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-  (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
-  (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-fill-column-indicator-on)))
-  (add-hook 'hack-local-variables-hook (lambda () (spacemacs/toggle-visual-line-navigation-on)))
+  (load-require-stuff)
+  (my-evil-config)
+
+  (global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
+  (define-key evil-insert-state-map (kbd "C-<tab>") 'transform-previous-char)
+
+  (add-hook 'hack-local-variables-hook 'spacemacs/toggle-truncate-lines-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-indent-guide-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
   (spacemacs/declare-prefix "o" "user-defined-prefix")
   (spacemacs/set-leader-keys "og" 'engine/search-google)
   (setenv "GIT_ASKPASS" "git-gui--askpass")
-  (spacemacs/toggle-indent-guide-globally)
 
-  (load (expand-file-name "prettify.el" dotspacemacs-directory))
-  (load (expand-file-name "lighthouse.el" dotspacemacs-directory))
+
   (module/display)
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; Workaround solution to Helm taking up full width and hiding other windows
+  ;; See https://github.com/syl20bnr/spacemacs/issues/9044
+  (setq helm-split-window-inside-p t)
+  (setq-default helm-display-function 'helm-default-display-buffer)
+
+  (setq magit-display-buffer-function
+        'magit-display-buffer-same-window-except-diff-v1)
+
+  ;; Crude way to highlight current line number.
+  (set-face-attribute 'line-number-current-line nil
+                      :foreground "white")
+
+  (setq-default display-line-numbers-width 3)
 
   (setq doom-modeline-buffer-modification-icon nil)
   (setq-default doom-modeline-height 20)
@@ -171,4 +205,24 @@ you should place your code here."
 
   ;; bad for perf but better for dirty disconnections
   (setq remote-file-name-inhibit-cache t)
+
+  ;; Seems to be bugged.
+  ;; (dimmer-configure-company-box)
+  (dimmer-configure-helm)
+  (dimmer-configure-hydra)
+  (dimmer-configure-magit)
+  (dimmer-configure-org)
+  (dimmer-configure-posframe)
+  (dimmer-configure-which-key)
+  (add-to-list 'dimmer-buffer-exclusion-regexps "\\*Messages\\*")
+  (setq dimmer-watch-frame-focus-events nil)
+  (setq dimmer-fraction 0.35)
+  ;; Why does this need a timer to not dim the minibuffer?
+  ;; The world may never know.
+  (run-with-idle-timer 0.5 nil (lambda () (dimmer-mode t)))
+
+  ;; 300 MB before GC when not idle
+  (setq gcmh-high-cons-threshold 300000000)
+  (setq gcmh-idle-delay 5)
+  (gcmh-mode 1)
   )

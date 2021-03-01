@@ -11,3 +11,6 @@ def _default_open(args):
 aliases['ls'] = ['ls', '--color', '--group-directories-first', '-ahlv']
 aliases['less'] = ['less', '-r']
 aliases['o'] = _default_open
+
+$XONSH_SHOW_TRACEBACK = True
+$COMPLETIONS_CONFIRM = True
