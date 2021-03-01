@@ -64,10 +64,11 @@ values."
      theming
 
      dap
-     lsp
+     (lsp :variables lsp-rust-server 'rust-analyzer)
      ;; Languages:
      autohotkey
      c-c++
+     elm
      emacs-lisp
      fstar
      html
@@ -76,7 +77,9 @@ values."
      latex
      lean
      markdown
-     python
+     (python :variables
+             python-backend 'lsp
+             python-lsp-server 'pyright)
      (rust :variables
            rust-backend 'lsp)
      )
@@ -124,6 +127,10 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+
+  (require 'recentf)
+  (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
+  (recentf-mode 1)
   )
 
 (defun dotspacemacs/user-load ()
@@ -131,6 +138,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+  (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode))
   )
 
 (defun dotspacemacs/user-config ()
@@ -157,4 +165,10 @@ you should place your code here."
 
   (setq doom-modeline-buffer-modification-icon nil)
   (setq-default doom-modeline-height 20)
+
+  (setq tramp-default-method "plinkx")
+  (eval-after-load 'tramp '(tramp-change-syntax 'simplified))
+
+  ;; bad for perf but better for dirty disconnections
+  (setq remote-file-name-inhibit-cache t)
   )
