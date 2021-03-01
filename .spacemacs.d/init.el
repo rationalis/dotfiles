@@ -152,7 +152,7 @@ This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
   (load-require-stuff)
-  (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode))
+  (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode helm-mode magit-mode))
   )
 
 (defun dotspacemacs/user-config ()
