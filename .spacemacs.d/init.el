@@ -106,8 +106,7 @@ values."
    ;; https://github.com/gonewest818/dimmer.el/issues/53
    ;; It looks like packages are stored separately for `develop' - make sure
    ;; that both branches are using the correct frozen packages.
-   dotspacemacs-frozen-packages '(solarized-theme
-                                  posframe)
+   dotspacemacs-frozen-packages '(posframe)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
    '(
