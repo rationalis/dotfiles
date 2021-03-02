@@ -47,7 +47,10 @@ values."
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      git
-     helm
+     ;; helm
+     (ivy :variables
+          ivy-enable-advanced-buffer-information t
+          ivy-extra-directories nil)
      org
      ;;nlinum
      ranger
@@ -93,11 +96,18 @@ values."
                                        :repo "Ilazki/prettify-utils.el"))
      dimmer
      gcmh
+     ivy-posframe
+     which-key-posframe
    )
    ;; A list of packages that cannot be updated.
    ;; I manually modified solarized.el to high-contrast as according to:
    ;; https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim#L399-L405
-   dotspacemacs-frozen-packages '(solarized-theme)
+   ;; Posframe modified due to following issue with dimmer:
+   ;; https://github.com/gonewest818/dimmer.el/issues/53
+   ;; It looks like packages are stored separately for `develop' - make sure
+   ;; that both branches are using the correct frozen packages.
+   dotspacemacs-frozen-packages '(solarized-theme
+                                  posframe)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
    '(
@@ -152,7 +162,7 @@ This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
   (load-require-stuff)
-  (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode helm-mode magit-mode))
+  (spacemacs/dump-modes '(emacs-lisp-mode eshell-mode ivy-mode magit-mode))
   )
 
 (defun dotspacemacs/user-config ()
@@ -206,10 +216,19 @@ you should place your code here."
   ;; bad for perf but better for dirty disconnections
   (setq remote-file-name-inhibit-cache t)
 
-  ;; Seems to be bugged.
-  ;; (dimmer-configure-company-box)
-  (dimmer-configure-helm)
-  (dimmer-configure-hydra)
+  ;; 300 MB before GC when not idle
+  (setq gcmh-high-cons-threshold 300000000)
+  (setq gcmh-idle-delay 5)
+  (gcmh-mode 1)
+
+
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  (ivy-posframe-mode 1)
+  (which-key-posframe-mode)
+
+  (dimmer-configure-company-box)
+  ;; (dimmer-configure-helm)
+  ;; (dimmer-configure-hydra)
   (dimmer-configure-magit)
   (dimmer-configure-org)
   (dimmer-configure-posframe)
@@ -220,9 +239,4 @@ you should place your code here."
   ;; Why does this need a timer to not dim the minibuffer?
   ;; The world may never know.
   (run-with-idle-timer 0.5 nil (lambda () (dimmer-mode t)))
-
-  ;; 300 MB before GC when not idle
-  (setq gcmh-high-cons-threshold 300000000)
-  (setq gcmh-idle-delay 5)
-  (gcmh-mode 1)
   )

@@ -56,4 +56,8 @@
     (evil-define-key 'normal helm-map (kbd "C-n") 'helm-next-line)
     (evil-normalize-keymaps))
 
+  (with-eval-after-load 'ivy
+    (evil-define-key 'insert ivy-mode-map (kbd "C-k") 'ivy-previous-line)
+    (evil-normalize-keymaps))
+
   )
